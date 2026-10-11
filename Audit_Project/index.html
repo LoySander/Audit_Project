@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Конструктор диаграмм по инфраструктуре</title>
+
+    <!-- Chart.js -->
+    <link rel="stylesheet" href="lib/slimselect.css" />
+    <script src="lib/chart.umd.min.js"></script>
+    <script src="lib/chartjs-plugin-datalabels.min.js"></script>
+    <script src="lib/slimselect.min.js"></script>
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 style="text-align: center">Конструктор диаграмм аудита</h1>
+      <p style="text-align: center; color: #7f8c8d">
+        Выберите срез данных — таблица и график настроятся автоматически
+      </p>
+
+      <div class="tabs">
+        <button
+          class="tab-btn active"
+          onclick="switchTab(event, 'tab-servers')"
+        >
+          🖥️ Серверное оборудование
+        </button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-storage')">
+          💾 СХД
+        </button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-virtual')">
+          ☁️ Виртуализация
+        </button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-workstations')">
+          💻 Рабочие станции
+        </button>
+      </div>
+
+      <!-- ================= ВКЛАДКА 1: СЕРВЕРЫ ================= -->
+      <div id="tab-servers" class="tab-content active">
+        <div class="constructor-layout">
+          <div class="card">
+            <div class="slice-selector">
+              <label>📊 Тип среза</label>
+              <select
+                id="slice-servers"
+                onchange="onSliceChange('servers')"
+              ></select>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th id="col-header-servers">Значение</th>
+                  <th style="width: 80px">Кол-во</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tbody-servers"></tbody>
+            </table>
+            <button class="btn btn-add" onclick="addRow('servers')">
+              + Добавить строку
+            </button>
+            <button class="btn btn-clear" onclick="clearRows('servers')">
+              Очистить всё
+            </button>
+            <div class="duplicate-warning" id="warning-servers">
+              ⚠️ Обнаружены повторяющиеся значения — проверьте данные
+            </div>
+            <div class="row-counter" id="counter-servers"></div>
+          </div>
+
+          <div class="card">
+            <div class="chart-header">
+              <h3 id="chart-title-servers">—</h3>
+              <div class="chart-actions">
+                <button class="btn-icon" onclick="downloadChart('servers')">
+                  📥 Скачать PNG
+                </button>
+                <button class="btn-icon" onclick="copyChart('servers')">
+                  📋 Копировать
+                </button>
+              </div>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="chart-servers"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= ВКЛАДКА 2: СХД ================= -->
+      <div id="tab-storage" class="tab-content">
+        <div class="constructor-layout">
+          <div class="card">
+            <div class="slice-selector">
+              <label>📊 Тип среза</label>
+              <select
+                id="slice-storage"
+                onchange="onSliceChange('storage')"
+              ></select>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th id="col-header-storage">Значение</th>
+                  <th style="width: 80px">Кол-во</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tbody-storage"></tbody>
+            </table>
+            <button class="btn btn-add" onclick="addRow('storage')">
+              + Добавить строку
+            </button>
+            <button class="btn btn-clear" onclick="clearRows('storage')">
+              Очистить всё
+            </button>
+            <div class="duplicate-warning" id="warning-storage">
+              ⚠️ Обнаружены повторяющиеся значения — проверьте данные
+            </div>
+            <div class="row-counter" id="counter-storage"></div>
+          </div>
+
+          <div class="card">
+            <div class="chart-header">
+              <h3 id="chart-title-storage">—</h3>
+              <div class="chart-actions">
+                <button class="btn-icon" onclick="downloadChart('storage')">
+                  📥 Скачать PNG
+                </button>
+                <button class="btn-icon" onclick="copyChart('storage')">
+                  📋 Копировать
+                </button>
+              </div>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="chart-storage"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= ВКЛАДКА 3: ВИРТУАЛИЗАЦИЯ ================= -->
+      <div id="tab-virtual" class="tab-content">
+        <div class="constructor-layout">
+          <div class="card">
+            <div class="slice-selector">
+              <label>📊 Тип среза</label>
+              <select
+                id="slice-virtual"
+                onchange="onSliceChange('virtual')"
+              ></select>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th id="col-header-virtual">Значение</th>
+                  <th style="width: 80px">Кол-во</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tbody-virtual"></tbody>
+            </table>
+            <button class="btn btn-add" onclick="addRow('virtual')">
+              + Добавить строку
+            </button>
+            <button class="btn btn-clear" onclick="clearRows('virtual')">
+              Очистить всё
+            </button>
+            <div class="duplicate-warning" id="warning-virtual">
+              ⚠️ Обнаружены повторяющиеся значения — проверьте данные
+            </div>
+            <div class="row-counter" id="counter-virtual"></div>
+          </div>
+
+          <div class="card">
+            <div class="chart-header">
+              <h3 id="chart-title-virtual">—</h3>
+              <div class="chart-actions">
+                <button class="btn-icon" onclick="downloadChart('virtual')">
+                  📥 Скачать PNG
+                </button>
+                <button class="btn-icon" onclick="copyChart('virtual')">
+                  📋 Копировать
+                </button>
+              </div>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="chart-virtual"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= ВКЛАДКА 4: РАБОЧИЕ СТАНЦИИ ================= -->
+      <div id="tab-workstations" class="tab-content">
+        <div class="constructor-layout">
+          <div class="card">
+            <div class="slice-selector">
+              <label>📊 Тип среза</label>
+              <select
+                id="slice-workstations"
+                onchange="onSliceChange('workstations')"
+              ></select>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th id="col-header-workstations">Значение</th>
+                  <th style="width: 80px">Кол-во</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tbody-workstations"></tbody>
+            </table>
+            <button class="btn btn-add" onclick="addRow('workstations')">
+              + Добавить строку
+            </button>
+            <button class="btn btn-clear" onclick="clearRows('workstations')">
+              Очистить всё
+            </button>
+            <div class="duplicate-warning" id="warning-workstations">
+              ⚠️ Обнаружены повторяющиеся значения — проверьте данные
+            </div>
+            <div class="row-counter" id="counter-workstations"></div>
+          </div>
+
+          <div class="card">
+            <div class="chart-header">
+              <h3 id="chart-title-workstations">—</h3>
+              <div class="chart-actions">
+                <button
+                  class="btn-icon"
+                  onclick="downloadChart('workstations')"
+                >
+                  📥 Скачать PNG
+                </button>
+                <button class="btn-icon" onclick="copyChart('workstations')">
+                  📋 Копировать
+                </button>
+              </div>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="chart-workstations"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">Готово!</div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
