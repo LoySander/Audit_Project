@@ -1,0 +1,33 @@
+# VCS
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Node.js
+node_modules
+npm-debug.log
+
+# Логи и временные
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Файлы, не нужные в образе
+Dockerfile
+.dockerignore
+web.config
+README.md
+CHANGELOG.md
+make-release.sh
+
+# Папки сборки
+build/
+docs/
+dist/
